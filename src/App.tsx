@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Link } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
+import { SITELINKS } from 'app/defaultValues';
+import useErrorsRedux from 'redux/errors';
+import Routes from 'routes';
+import useStyles from './AppStyles';
 
-function App() {
+const { Header, Content, Footer } = Layout;
+
+const App: React.FC = () => {
+  useErrorsRedux();
+  const classes = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Header className={classes.header}>
+        <span>School Dashboard</span>
+        <Menu theme="dark" mode="horizontal" className={classes.menuContainer}>
+          <Menu.Item key="1">
+            <Link to={SITELINKS.student.list}>Student</Link>
+          </Menu.Item>
+          <Menu.Item key="2">
+            <Link to={SITELINKS.teacher.list}>Teacher</Link>
+          </Menu.Item>
+          <Menu.Item key="3">
+            <Link to={SITELINKS.course.list}>Course</Link>
+          </Menu.Item>
+        </Menu>
+      </Header>
+      <Content className={classes.mainContainer}>
+        <div className={classes.container}>
+          <Routes />
+        </div>
+      </Content>
+      <Footer>2021, todos los derechos reservados</Footer>
+    </Layout>
   );
-}
+};
 
 export default App;
